@@ -19,13 +19,16 @@ public class ExpenseTrackerView extends JFrame {
   private JFormattedTextField amountField;
   private JTextField categoryField;
   private DefaultTableModel model;
+  private JTextField minAmountField;
+  private JTextField maxAmountField;
+  private JTextField filterCategoryField;
   
 
   public ExpenseTrackerView() {
     setTitle("Expense Tracker"); // Set title
     setSize(600, 400); // Make GUI larger
 
-    String[] columnNames = {"serial", "Amount", "Category", "Date"};
+    String[] columnNames = {"Serial", "Amount", "Category", "Date"};
     this.model = new DefaultTableModel(columnNames, 0);
 
     addTransactionBtn = new JButton("Add Transaction");
@@ -51,12 +54,41 @@ public class ExpenseTrackerView extends JFrame {
     inputPanel.add(categoryLabel); 
     inputPanel.add(categoryField);
     inputPanel.add(addTransactionBtn);
+
+    JLabel filterSectionLabel = new JLabel("Filter");
+
+    JLabel minAmountLabel = new JLabel("Min Amount:");
+    minAmountField = new JTextField(10);
+
+    JLabel maxAmountLabel = new JLabel("Max Amount:");
+    maxAmountField = new JTextField(10);
+
+    JLabel categoryFilterLabel = new JLabel("Category:");
+    filterCategoryField = new JTextField(10);
+
+    JPanel filterFieldPanel = new JPanel();
+    filterFieldPanel.add(minAmountLabel);
+    filterFieldPanel.add(minAmountField);
+    filterFieldPanel.add(maxAmountLabel);
+    filterFieldPanel.add(maxAmountField);
+    filterFieldPanel.add(categoryFilterLabel);
+    filterFieldPanel.add(filterCategoryField);
+
+    JPanel filterPanel = new JPanel();
+    filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
+    filterPanel.add(filterSectionLabel);
+    filterPanel.add(filterFieldPanel);
+
+    JPanel inputFilterPanel = new JPanel();
+    inputFilterPanel.setLayout(new BoxLayout(inputFilterPanel, BoxLayout.Y_AXIS));
+    inputFilterPanel.add(inputPanel);
+    inputFilterPanel.add(filterPanel);
   
     JPanel buttonPanel = new JPanel();
     buttonPanel.add(addTransactionBtn);
   
     // Add panels to frame
-    add(inputPanel, BorderLayout.NORTH);
+    add(inputFilterPanel, BorderLayout.NORTH);
     add(new JScrollPane(transactionsTable), BorderLayout.CENTER); 
     add(buttonPanel, BorderLayout.SOUTH);
   
@@ -89,6 +121,10 @@ public class ExpenseTrackerView extends JFrame {
       transactionsTable.updateUI();
   
     }  
+
+  public void filterTransactions() {
+
+  }
   
 
   
