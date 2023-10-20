@@ -5,7 +5,6 @@ import view.ExpenseTrackerView;
 import java.util.List;
 
 
-
 import model.ExpenseTrackerModel;
 import model.Transaction;
 public class ExpenseTrackerController {
@@ -46,9 +45,15 @@ public class ExpenseTrackerController {
   }
   
   // Other controller methods
-  public void applyFilter(TransactionFilter transactionFilter) {
-    List<Transaction> transactions = model.getTransactions();
-    // return transactionFilter.filter(transactions)
-
+  public void applyFilter(boolean amountFilter) {
+    List<Transaction> transactions;
+    if (amountFilter) {
+      AmountFilter amtFilter = new AmountFilter(view.getMinAmtField(), view.getMaxAmtField());
+      transactions = amtFilter.filter(model.getTransactions());
+    } else {
+      CategoryFilter categoryFilter = new CategoryFilter(view.getFilterCategoryField());
+      transactions = categoryFilter.filter(model.getTransactions());
+    }
+    view.filterTransactions(transactions);
   }
 }

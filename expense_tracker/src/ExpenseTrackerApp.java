@@ -34,6 +34,19 @@ public class ExpenseTrackerApp {
       }
     });
 
+    view.filterByAmountBtn().addActionListener(e -> {
+      // Filter
+      // view.setFilterCategoryField("");
+      controller.applyFilter(true);
+    });
+
+    view.filterByCategoryBtn().addActionListener(e -> {
+      // Filter
+      // view.setMinAmtField("");
+      // view.setMaxAmtField("");
+      controller.applyFilter(false);
+    });
+
   }
 
 }

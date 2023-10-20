@@ -2,18 +2,21 @@ package controller;
 
 import java.util.List;
 
+import model.Transaction;
+import java.util.stream.Collectors;
+
 public class AmountFilter implements TransactionFilter {
     
     private double minAmount;
     private double maxAmount;
     
-    public CategoryFilter(double minAmount, double maxAmount) {
+    public AmountFilter(double minAmount, double maxAmount) {
         this.minAmount = minAmount;
         this.maxAmount = maxAmount;
     }
     
-    public static List<Transaction> filter(List<Transaction> transactions) {
-        return transactions.filter(transaction -> transaction.amount >= this.minAmount && transaction.amount <= this.maxAmount);
+    public List<Transaction> filter(List<Transaction> transactions) {
+        return transactions.stream().filter(transaction -> transaction.getAmount() >= this.minAmount && transaction.getAmount() <= this.maxAmount).collect(Collectors.toList());
     }
 
 }
