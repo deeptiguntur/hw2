@@ -21,7 +21,14 @@ public class ExpenseTrackerModel {
   }
 
   public List<Transaction> getTransactions() {
-    return transactions;
+    List<Transaction> copy = new ArrayList<>();
+
+    for (Transaction t : transactions) {
+        // Create a deep copy of the Transaction object
+        copy.add(new Transaction(t));
+    }
+
+    return Collections.unmodifiableList(copy);
   }
 
 }
