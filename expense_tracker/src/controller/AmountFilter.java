@@ -16,7 +16,7 @@ public class AmountFilter implements TransactionFilter {
     }
     
     public List<Transaction> filter(List<Transaction> transactions) {
-        return transactions.stream().filter(transaction -> transaction.getAmount() >= this.minAmount && transaction.getAmount() <= this.maxAmount).collect(Collectors.toList());
+        return transactions.stream().filter(transaction -> transaction.getAmount() >= minAmount && transaction.getAmount() <= maxAmount).collect(Collectors.toList());
     }
 
 }

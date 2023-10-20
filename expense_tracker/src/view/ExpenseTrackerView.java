@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.JFormattedTextField.AbstractFormatterFactory;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import controller.InputValidation;
@@ -9,6 +10,7 @@ import controller.InputValidation;
 import java.awt.*;
 import java.text.NumberFormat;
 
+import model.ExpenseTrackerModel;
 import model.Transaction;
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class ExpenseTrackerView extends JFrame {
   private JTextField minAmountField;
   private JTextField maxAmountField;
   private JTextField filterCategoryField;
+  private JButton filterByAmount;
+  private JButton filterByCategory;
   
 
   public ExpenseTrackerView() {
@@ -32,6 +36,8 @@ public class ExpenseTrackerView extends JFrame {
     this.model = new DefaultTableModel(columnNames, 0);
 
     addTransactionBtn = new JButton("Add Transaction");
+    filterByAmount = new JButton("Filter By Amount");
+    filterByCategory = new JButton("Filter By Category");
 
     // Create UI components
     JLabel amountLabel = new JLabel("Amount:");
@@ -86,6 +92,8 @@ public class ExpenseTrackerView extends JFrame {
   
     JPanel buttonPanel = new JPanel();
     buttonPanel.add(addTransactionBtn);
+    buttonPanel.add(filterByAmount);
+    buttonPanel.add(filterByCategory);
   
     // Add panels to frame
     add(inputFilterPanel, BorderLayout.NORTH);
@@ -122,12 +130,67 @@ public class ExpenseTrackerView extends JFrame {
   
     }  
 
-  public void filterTransactions() {
+  public void filterTransactions(List<Transaction> transactions) {
+	  
+	  getTransactionsTable().setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+	       @Override
+	       public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+	                                                     boolean hasFocus, int row, int column) {
+	    	   int row2 = -1;
+	    	   String CategoryValue = (String)table.getValueAt(row, 2);
+	    	   double AmountValue = -1;
+	    	   if (table.getValueAt(row, 1) != null) {	   
+	    		   AmountValue = (double) table.getValueAt(row, 1);
+	    	   }
+	           for (Transaction t: transactions) {
+	        	   if (AmountValue > 0 && AmountValue == t.getAmount() && CategoryValue != null && t.getCategory().equalsIgnoreCase(CategoryValue)) {
+	        		   row2 = row;
+	        	   }
+	           }
+	           Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row2, column);
+	           if (row2 == row) {
+	               c.setBackground(new Color(173, 255, 168)); // Light green
+	           } else {
+	               c.setBackground(table.getBackground());
+	           }
+	    	   return c;
+	       }
+	   });
+  }
 
+  public JButton filterByAmountBtn() {
+    return filterByAmount;
+  }
+
+  public JButton filterByCategoryBtn() {
+    return filterByCategory;
+  }
+
+  public double getMinAmtField() {
+    return Double.parseDouble(minAmountField.getText());
+  }
+
+  public void setMinAmtField(JTextField minAmountField) {
+    this.minAmountField = minAmountField;
+  }
+
+  public double getMaxAmtField() {
+    return Double.parseDouble(maxAmountField.getText());
+  }
+
+  public void setMaxAmtField(JTextField maxAmountField) {
+    this.maxAmountField = maxAmountField;
+  }
+
+  public String getFilterCategoryField() {
+    return filterCategoryField.getText();
+  }
+
+  public void setFilterCategoryField(JTextField filterCategoryField) {
+    this.filterCategoryField = filterCategoryField;
   }
   
 
-  
   
   public JButton getAddTransactionBtn() {
     return addTransactionBtn;

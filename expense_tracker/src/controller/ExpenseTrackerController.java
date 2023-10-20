@@ -55,5 +55,6 @@ public class ExpenseTrackerController {
       transactions = categoryFilter.filter(model.getTransactions());
     }
     view.filterTransactions(transactions);
+    view.refreshTable(model.getTransactions());
   }
 }
