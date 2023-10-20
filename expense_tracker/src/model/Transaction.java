@@ -6,15 +6,23 @@ import java.util.List;
 
 public class Transaction {
 
-  private final double amount;
-  private final String category;
-  private final String timestamp;
+  private  double amount;
+  private  String category;
+  private  String timestamp;
 
   public Transaction(double amount, String category) {
     this.amount = amount;
     this.category = category;
     this.timestamp = generateTimestamp();
   }
+
+  // Copy constructor to create a deep copy of a Transaction
+  public Transaction(Transaction original) {
+      this.amount = original.amount;
+      this.category = original.category;
+      this.timestamp = new String(original.timestamp);
+  }
+
 
   public double getAmount() {
     return amount;
