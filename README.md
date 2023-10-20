@@ -15,7 +15,7 @@ Min Amount - Enter Min Amount <br />
 Max Amount - Enter Max Amount <br />
 Filter by Amount - Transactions with amount in range between min amount and max amount inclusive will get highlighted in GREEN <br />
 <br />
-Filter by Category has 1 fields - Category and a Filter by Category controller button<br />
-Category - Enter Category \\
-Filter by Amount - Transactions with this category will get highlighted in GREEN <br />
+Filter by Category has 1 field - Category and a Filter by Category controller button<br />
+Category - Enter Category <br />
+Filter by Category - Transactions with this category will get highlighted in GREEN <br />
 
