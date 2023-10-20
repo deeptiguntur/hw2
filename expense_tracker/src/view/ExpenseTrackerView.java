@@ -136,7 +136,7 @@ public class ExpenseTrackerView extends JFrame {
 	       @Override
 	       public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 	                                                     boolean hasFocus, int row, int column) {
-	    	   int row2 = -1;
+	    	   int filteredRow = -1;
 	    	   String CategoryValue = (String)table.getValueAt(row, 2);
 	    	   double AmountValue = -1;
 	    	   if (table.getValueAt(row, 1) != null) {	   
@@ -144,11 +144,11 @@ public class ExpenseTrackerView extends JFrame {
 	    	   }
 	           for (Transaction t: transactions) {
 	        	   if (AmountValue > 0 && AmountValue == t.getAmount() && CategoryValue != null && t.getCategory().equalsIgnoreCase(CategoryValue)) {
-	        		   row2 = row;
+	        		   filteredRow = row;
 	        	   }
 	           }
-	           Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row2, column);
-	           if (row2 == row) {
+	           Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, filteredRow, column);
+	           if (filteredRow == row) {
 	               c.setBackground(new Color(173, 255, 168)); // Light green
 	           } else {
 	               c.setBackground(table.getBackground());
@@ -167,7 +167,12 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   public double getMinAmtField() {
-    return Double.parseDouble(minAmountField.getText());
+	  if (minAmountField.getText().isEmpty()) {
+	      return 0;
+	  } else {
+		  double amount = Double.parseDouble(minAmountField.getText());
+		  return amount;
+	  }
   }
 
   public void setMinAmtField(JTextField minAmountField) {
@@ -175,7 +180,12 @@ public class ExpenseTrackerView extends JFrame {
   }
 
   public double getMaxAmtField() {
-    return Double.parseDouble(maxAmountField.getText());
+    if (maxAmountField.getText().isEmpty()) {
+	      return 0;
+	} else {
+		  double amount = Double.parseDouble(maxAmountField.getText());
+		  return amount;
+	}
   }
 
   public void setMaxAmtField(JTextField maxAmountField) {

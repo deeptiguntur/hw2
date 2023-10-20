@@ -1,4 +1,5 @@
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ExpenseTrackerController;
@@ -35,16 +36,21 @@ public class ExpenseTrackerApp {
     });
 
     view.filterByAmountBtn().addActionListener(e -> {
-      // Filter
-      // view.setFilterCategoryField("");
-      controller.applyFilter(true);
+    	boolean filter = controller.applyFilter(true);
+    	
+    	if (!filter) {
+            JOptionPane.showMessageDialog(view, "Invalid Min or Max amount in filter");
+            view.toFront();
+        }
     });
 
     view.filterByCategoryBtn().addActionListener(e -> {
-      // Filter
-      // view.setMinAmtField("");
-      // view.setMaxAmtField("");
-      controller.applyFilter(false);
+    	boolean filter = controller.applyFilter(false);
+    	
+    	if (!filter) {
+            JOptionPane.showMessageDialog(view, "Invalid category in filter");
+            view.toFront();
+        }
     });
 
   }

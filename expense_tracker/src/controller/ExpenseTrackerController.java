@@ -45,16 +45,23 @@ public class ExpenseTrackerController {
   }
   
   // Other controller methods
-  public void applyFilter(boolean amountFilter) {
+  public boolean applyFilter(boolean amountFilter) {
     List<Transaction> transactions;
     if (amountFilter) {
-      AmountFilter amtFilter = new AmountFilter(view.getMinAmtField(), view.getMaxAmtField());
-      transactions = amtFilter.filter(model.getTransactions());
+    	if (!InputValidation.isValidAmount(view.getMinAmtField()) || !InputValidation.isValidAmount(view.getMaxAmtField())) {
+    		return false;
+    	}
+    	AmountFilter amtFilter = new AmountFilter(view.getMinAmtField(), view.getMaxAmtField());
+    	transactions = amtFilter.filter(model.getTransactions());
     } else {
-      CategoryFilter categoryFilter = new CategoryFilter(view.getFilterCategoryField());
-      transactions = categoryFilter.filter(model.getTransactions());
+    	if (!InputValidation.isValidCategory(view.getFilterCategoryField())) {
+    		return false;
+    	}
+    	CategoryFilter categoryFilter = new CategoryFilter(view.getFilterCategoryField());
+    	transactions = categoryFilter.filter(model.getTransactions());
     }
     view.filterTransactions(transactions);
     view.refreshTable(model.getTransactions());
+    return true;
   }
 }
