@@ -170,7 +170,12 @@ public class ExpenseTrackerView extends JFrame {
 	  if (minAmountField.getText().isEmpty()) {
 	      return 0;
 	  } else {
-		  double amount = Double.parseDouble(minAmountField.getText());
+		  double amount = 0;
+		  try {
+			  amount = Double.parseDouble(minAmountField.getText());
+		  } catch(NumberFormatException error) {
+			  return 0;
+		  }
 		  return amount;
 	  }
   }
@@ -183,7 +188,12 @@ public class ExpenseTrackerView extends JFrame {
     if (maxAmountField.getText().isEmpty()) {
 	      return 0;
 	} else {
-		  double amount = Double.parseDouble(maxAmountField.getText());
+		double amount = 0;
+		  try {
+			  amount = Double.parseDouble(maxAmountField.getText());
+		  } catch(NumberFormatException error) {
+			  return 0;
+		  }
 		  return amount;
 	}
   }
